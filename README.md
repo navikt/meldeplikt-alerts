@@ -1,5 +1,5 @@
-# meldekortservice-alerts
-Lager alerts for meldekortservice på team meldeplikt
+# meldeplikt-alerts
+Lager alerts for appene til team meldeplikt
 
 For mer informasjon om hvordan alarmene fungere se: `https://doc.nais.io/observability/alerts`
 
