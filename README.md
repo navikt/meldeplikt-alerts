@@ -9,7 +9,7 @@ Vi er tilgjenngelig på slack kanalen #meldekort
 ## Komme i gang
 En kan bruke `https://prometheus.nais.preprod.local/graph` som hjelp til å teste queries.
 
-Deploy alert i ønsket cluster: `kubectl apply -f meldekortservice-alert.yaml`
+Deploy alert i ønsket cluster: `kubectl apply -f meldekortservice-alerts.yaml`
 
 Om alerten allerede finnes må den fjernes først: `kubectl delete alert meldekortservice-alerts`
 
