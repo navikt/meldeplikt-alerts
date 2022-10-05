@@ -14,7 +14,7 @@ spec:
     - alert: {{ alert }}
       expr: {{ expr }}
 #      for: {{ for }}
-      for: 2m
+      for: '2m'
       description: {{ description }}
       action: {{ action }}
       severity: {{ severity }}
