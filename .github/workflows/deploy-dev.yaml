@@ -30,7 +30,7 @@ jobs:
           ls -l
           ls -l .nais
           ls -l .github/workflows
-          echo $(cat env.RESOURCE_FILE)
+          echo $(cat ${{ env.RESOURCE_FILE }})
 
       - name: Deploy to dev-fss
         uses: nais/deploy/actions/deploy@v1
