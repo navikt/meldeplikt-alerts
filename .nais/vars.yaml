@@ -1,7 +1,7 @@
 name: meldepliktalerts
 namespace: meldekort
 team: meldekort
-channel: 'team-meldeplikt-alerts'
+#channel: 'team-meldeplikt-alerts'
 ## Felles alerts for alle clustere
 #alerts:
 #  # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
