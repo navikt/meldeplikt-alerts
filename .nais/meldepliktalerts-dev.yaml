@@ -19,7 +19,7 @@ spec:
 #      severity: {{ severity }}
 #  {{/each}}
   alerts:
-    # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
+    # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podderX
     - alert: meldeplikt-app-nede
       expr: kube_deployment_status_replicas_available{namespace="meldekort"} == 0
       for: 2m
