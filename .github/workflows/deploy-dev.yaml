@@ -29,6 +29,10 @@ jobs:
           cat ${{ env.RESOURCE_FILE }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_FSS }}
           cat ${{ env.RESOURCE_FILE }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_GCP }}
           ls -l .nais
+          echo FSS---------------------------------------
+          cat ${{ env.RESOURCE_FILE_FSS }}
+          echo GCP---------------------------------------
+          cat ${{ env.RESOURCE_FILE_GCP }}
 
 #      - name: Deploy to dev-fss
 #        uses: nais/deploy/actions/deploy@v1
