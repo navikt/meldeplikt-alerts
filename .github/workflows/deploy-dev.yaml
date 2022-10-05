@@ -24,6 +24,10 @@ jobs:
         run: |
           cat .nais/alerts.yaml >> env.RESOURCE_FILE
 
+      - name: Debug
+        run: |
+          echo cat env.RESOURCE_FILE
+
       - name: Deploy to dev-fss
         uses: nais/deploy/actions/deploy@v1
         env:
