@@ -8,7 +8,7 @@ metadata:
 spec:
   receivers:
     slack:
-      channel: '#team-meldeplikt-alerts-dev'
+      channel: '#{{ channel }}-dev'
 #  alerts:
 #  {{#each alerts}}
 #    - alert: {{ alert }}
