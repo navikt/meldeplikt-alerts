@@ -27,6 +27,8 @@ jobs:
       - name: Debug
         run: |
           ls -l
+          ls -l .nais
+          ls -l .github/workflows
           echo $(cat env.RESOURCE_FILE)
 
       - name: Deploy to dev-fss
