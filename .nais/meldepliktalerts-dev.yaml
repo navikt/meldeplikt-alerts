@@ -14,7 +14,7 @@ spec:
     - alert: {{ alert }}
       expr: {{ expr }}
       for: {{ for }}
-#      description: {{ description }}
+      description: {{ description }}
       action: {{ action }}
       severity: {{ severity }}
   {{/each}}
