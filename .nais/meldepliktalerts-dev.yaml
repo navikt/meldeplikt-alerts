@@ -14,8 +14,12 @@ spec:
     - alert: {{ alert }}
       expr: {{ expr }}
       for: {{ for }}
-      description: {{ description }}
-      action: {{ action }}
+#      description: {{ description }}
+      description: > 
+        sadasdasdsad adas  dsad a
+#      action: {{ action }}
+      action: |
+        dsfdsfsd  dsfds sdf sfdsfsf
       severity: {{ severity }}
   {{/each}}
 #  alerts:
