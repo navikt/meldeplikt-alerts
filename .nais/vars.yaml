@@ -2,3 +2,18 @@ name: meldepliktalerts
 namespace: meldekort
 team: meldekort
 channel: 'team-meldeplikt-alerts'
+commonAlerts:
+  # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
+  - alert: meldeplikt-app-nede
+    expr: kube_deployment_status_replicas_available{namespace="{{ namespace }}"} == 0
+    for: 2m
+    description: '*\{{ $labels.deployment }}* er nede i namespace \{{ $labels.namespace }}.'
+    action: 'Kjør `kubectl describe pod -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for logger. Sjekk også Kibana for eventuelle feil som er logget, query `application: \{{ $labels.deployment }} AND (level:Error OR level:Warning)`.'
+    severity: danger
+  # Sjekker om containere restartes flere ganger
+  - alert: meldeplikt-kontinuerlig-restart
+    expr: sum(increase(kube_pod_container_status_restarts_total{namespace="{{ namespace }}"}[5m])) by (container) > 3
+    for: 2m
+    description: '*\{{ $labels.container }}* har restartet flere ganger den siste halvtimen.'
+    action: 'Se `kubectl describe pod \{{ $labels.container }} -n {{ namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.container }} -n {{ namespace }}` for logger.'
+    severity: danger
