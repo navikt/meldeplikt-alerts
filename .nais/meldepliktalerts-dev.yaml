@@ -13,8 +13,7 @@ spec:
   {{#each alertsx}}
     - alert: {{ alert }}
       expr: {{ expr }}
-#      for: {{ for }}
-      for: '2m'
+      for: {{ for }}
       description: {{ description }}
       action: {{ action }}
       severity: {{ severity }}
