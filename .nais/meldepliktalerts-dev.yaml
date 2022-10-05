@@ -12,11 +12,11 @@ spec:
   alerts:
   {{#each alerts}}
     - alert: {{ alert }}
-      expr: {{ expr }}
-      for: {{ for }}
-      description: {{ description }}
-      action: {{ action }}
-      severity: {{ severity }}
+#      expr: {{ expr }}
+#      for: {{ for }}
+#      description: {{ description }}
+#      action: {{ action }}
+#      severity: {{ severity }}
   {{/each}}
 #  alerts:
 #    # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podderX
