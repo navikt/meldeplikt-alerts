@@ -6,7 +6,7 @@ on:
       - '!master'
     paths:
       - .github/workflows/deploy-dev.yaml
-      - meldepliktalerts-dev.yaml
+      - .nasi/meldepliktalerts-dev.yaml
 jobs:
   deploy_dev:
     name: Deploy alerts til dev-fss
@@ -20,7 +20,7 @@ jobs:
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
-          RESOURCE: meldepliktalerts-dev.yaml
+          RESOURCE: .nais/meldepliktalerts-dev.yaml
           VARS: .nais/vars.yaml
 
 #      - name: Deploy to dev-gcp
