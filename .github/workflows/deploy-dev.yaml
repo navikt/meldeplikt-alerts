@@ -1,20 +1,23 @@
-name: Deploy to dev-fss
+name: Deploy to dev
 on:
   push:
-    branches:
-      - '*'
-      - '!master'
+    branches-ignore:
+      - 'master'
     paths:
       - .github/workflows/deploy-dev.yaml
       - .nais/meldepliktalerts-dev.yaml
       - .nais/vars.yaml
       - .nais/alerts.yaml
+      - .nais/alerts-fss.yaml
+      - .nais/alerts-gcp.yaml
 env:
   RESOURCE_FILE: .nais/meldepliktalerts-dev.yaml
+  RESOURCE_FILE_FSS: .nais/meldepliktalerts-dev-fss.yaml
+  RESOURCE_FILE_GCP: .nais/meldepliktalerts-dev-gcp.yaml
 
 jobs:
   deploy_dev:
-    name: Deploy alerts til dev-fss
+    name: Deploy alerts to dev-fss
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -23,20 +26,24 @@ jobs:
       - name: Append alerts
         run: |
           cat .nais/alerts.yaml >> ${{ env.RESOURCE_FILE }}
+          cat ${{ env.RESOURCE_FILE }} | cat .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_FSS }}
+          cat ${{ env.RESOURCE_FILE }} | cat .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_GCP }}
+          ls -l .nais
 
-      - name: Deploy to dev-fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
-          RESOURCE: ${{ env.RESOURCE_FILE }}
-          VARS: .nais/vars.yaml
-          PRINT_PAYLOAD: true
-
+#      - name: Deploy to dev-fss
+#        uses: nais/deploy/actions/deploy@v1
+#        env:
+#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+#          CLUSTER: dev-fss
+#          RESOURCE: ${{ env.RESOURCE_FILE_FSS }}
+#          VARS: .nais/vars.yaml
+#          PRINT_PAYLOAD: true
+#
 #      - name: Deploy to dev-gcp
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
 #          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
 #          CLUSTER: dev-gcp
-#          RESOURCE: meldepliktalerts-dev.yaml
+#          RESOURCE: ${{ env.RESOURCE_FILE_GCP }}
 #          VARS: .nais/vars.yaml
+#          PRINT_PAYLOAD: true

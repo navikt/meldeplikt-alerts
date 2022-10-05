@@ -1,4 +1,4 @@
-name: meldepliktalerts
+name: meldeplikt-alerts
 namespace: meldekort
 team: meldekort
 channel: 'team-meldeplikt-alerts'
