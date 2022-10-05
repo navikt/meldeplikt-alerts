@@ -3,7 +3,7 @@ namespace: meldekort
 team: meldekort
 channel: 'team-meldeplikt-alerts'
 ## Felles alerts for alle clustere
-alerts:
+alertsx:
   # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
   - alert: meldeplikt-app-nede
     expr: kube_deployment_status_replicas_available{namespace="meldekort"} == 0

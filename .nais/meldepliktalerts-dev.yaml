@@ -10,7 +10,7 @@ spec:
     slack:
       channel: '#{{ channel }}-dev'
   alerts:
-  {{#each alerts}}
+  {{#each alertsx}}
     - alert: {{ alert }}
       expr: {{ expr }}
       for: {{ for }}
