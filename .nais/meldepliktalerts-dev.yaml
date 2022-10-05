@@ -14,10 +14,10 @@ spec:
     - alert: {{ alert }}
       expr: {{ expr }}
       for: {{ for }}
-      description: description
+      description: The app might crash sometimes due to startup errors
 #      description: {{ description }}
 #      action: {{ action }}
-      action: action
+      action: Read app logs(kubectl logs appname). Read Application events (kubectl descibe deployment appname)
       severity: {{ severity }}
   {{/each}}
 #  alerts:
