@@ -22,7 +22,7 @@ jobs:
           CLUSTER: dev-fss
           RESOURCE: .nais/meldepliktalerts-dev.yaml
           VARS: .nais/vars.yaml
-
+#
 #      - name: Deploy to dev-gcp
 #        uses: nais/deploy/actions/deploy@v1
 #        env:
