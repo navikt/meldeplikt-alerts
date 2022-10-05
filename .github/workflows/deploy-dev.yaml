@@ -6,7 +6,7 @@ on:
       - '!master'
     paths:
       - .github/workflows/deploy-dev.yaml
-      - .nasi/meldepliktalerts-dev.yaml
+      - .nais/meldepliktalerts-dev.yaml
 jobs:
   deploy_dev:
     name: Deploy alerts til dev-fss
