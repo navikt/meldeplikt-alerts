@@ -6,11 +6,11 @@ on:
       - '!master'
     paths:
       - .github/workflows/deploy-dev.yaml
-      - .nais/meldepliktalerts-dev.yaml
+#      - .nais/meldepliktalerts-dev.yaml
+      - ${{ env.RESOURCE_FILE }}
       - .nais/vars.yaml
       - .nais/alerts.yaml
 env:
-  ALERTS_FILE: .nais/alerts.yaml
   RESOURCE_FILE: .nais/meldepliktalerts-dev.yaml
 
 jobs:
@@ -25,19 +25,12 @@ jobs:
         run: |
           cat .nais/alerts.yaml >> ${{ env.RESOURCE_FILE }}
 
-      - name: Debug
-        run: |
-          ls -l
-          ls -l .nais
-          ls -l .github/workflows
-          echo $(cat ${{ env.RESOURCE_FILE }})
-
       - name: Deploy to dev-fss
         uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-fss
-          RESOURCE: .nais/meldepliktalerts-dev.yaml
+          RESOURCE: ${{ env.RESOURCE_FILE }}
           VARS: .nais/vars.yaml
           PRINT_PAYLOAD: true
 
