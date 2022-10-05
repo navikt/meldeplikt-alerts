@@ -26,8 +26,8 @@ jobs:
       - name: Append alerts
         run: |
           cat .nais/alerts.yaml >> ${{ env.RESOURCE_FILE }}
-          cat ${{ env.RESOURCE_FILE }} | cat .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_FSS }}
-          cat ${{ env.RESOURCE_FILE }} | cat .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_GCP }}
+          cat ${{ env.RESOURCE_FILE }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_FSS }}
+          cat ${{ env.RESOURCE_FILE }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_GCP }}
           ls -l .nais
 
 #      - name: Deploy to dev-fss
