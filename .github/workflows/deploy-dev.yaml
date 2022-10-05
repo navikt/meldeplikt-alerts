@@ -1,0 +1,32 @@
+name: Deploy to dev-fss
+on:
+  push:
+    branches:
+      - '*'
+      - '!master'
+    paths:
+      - .github/workflows/deploy-dev.yaml
+      - meldepliktalerts-dev.yaml
+jobs:
+  deploy_dev:
+    name: Deploy alerts til dev-fss
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy to dev-fss
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-fss
+          RESOURCE: meldepliktalerts-dev.yaml
+          VARS: .nais/vars.yaml
+
+#      - name: Deploy to dev-gcp
+#        uses: nais/deploy/actions/deploy@v1
+#        env:
+#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+#          CLUSTER: dev-gcp
+#          RESOURCE: meldepliktalerts-dev.yaml
+#          VARS: .nais/vars.yaml
