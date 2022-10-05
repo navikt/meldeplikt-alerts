@@ -11,7 +11,8 @@ alertsx:
 #    description: '*{{ $labels.deployment }}* er nede i namespace {{ $labels.namespace }}.'
     description: 'x'
     action: |
-      Kjør `kubectl describe pod -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for logger. Sjekk også Kibana for eventuelle feil som er logget, query `application: \{{ $labels.deployment }} AND (level:Error OR level:Warning)`.
+      Kjør `kubectl describe pod -l app= -n ` for å se events, og `kubectl logs -l app= -n ` for logger. Sjekk også Kibana for eventuelle feil som er logget, query `application: AND (level:Error OR level:Warning)`.
+#      Kjør `kubectl describe pod -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for logger. Sjekk også Kibana for eventuelle feil som er logget, query `application: \{{ $labels.deployment }} AND (level:Error OR level:Warning)`.
     severity: danger
 #  # Sjekker om containere restartes flere ganger
 #  - alert: meldeplikt-kontinuerlig-restart
