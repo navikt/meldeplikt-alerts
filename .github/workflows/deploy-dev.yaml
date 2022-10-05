@@ -8,6 +8,10 @@ on:
       - .github/workflows/deploy-dev.yaml
       - .nais/meldepliktalerts-dev.yaml
       - .nais/vars.yaml
+      - .nais/alerts.yaml
+env:
+  RESOURCE_FILE: .nais/meldepliktalerts-dev.yaml
+
 jobs:
   deploy_dev:
     name: Deploy alerts til dev-fss
@@ -15,6 +19,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
+      - name: Append alerts
+        run: |
+          cat .nais/alerts.yaml >> env.RESOURCE_FILE
 
       - name: Deploy to dev-fss
         uses: nais/deploy/actions/deploy@v1

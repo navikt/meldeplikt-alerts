@@ -10,14 +10,6 @@ spec:
     slack:
       channel: '#{{ channel }}-dev'
   alerts:
-  {{#each commonAlerts}}
-     - alert: {{ alert }}
-       expr: {{ expr }}
-       for: {{ for }}
-       description: {{ description }}
-       action: {{ action }}
-       severity: {{ severity }}
-  {{/each}}
 #    # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
 #    - alert: meldeplikt-app-nede
 #      expr: kube_deployment_status_replicas_available{namespace="{{ namespace }}"} == 0
