@@ -14,8 +14,8 @@ on:
 
 env:
   RESOURCE_FILE: .nais/meldeplikt-alerts.yaml
-  RESOURCE_FILE_FSS: .nais/meldeplikt-alerts-prod-fss.yaml
-  RESOURCE_FILE_GCP: .nais/meldeplikt-alerts-prod-gcp.yaml
+  RESOURCE_FILE_FSS: .nais/meldeplikt-alerts-fss.yaml
+  RESOURCE_FILE_GCP: .nais/meldeplikt-alerts-gcp.yaml
   VARS_FILE: .nais/vars.yaml
 
 jobs:
