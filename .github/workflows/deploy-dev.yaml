@@ -1,6 +1,5 @@
 name: Deploy alerts to dev
 on:
-  workflow_dispatch:
   push:
     branches-ignore:
       - 'master'
@@ -11,6 +10,7 @@ on:
       - .nais/alerts-common.yaml
       - .nais/alerts-fss.yaml
       - .nais/alerts-gcp.yaml
+  workflow_dispatch:
 
 env:
   RESOURCE_FILE: .nais/meldeplikt-alerts-dev.yaml

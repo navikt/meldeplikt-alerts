@@ -3,5 +3,5 @@
       expr: selftests_aggregate_result_status{kubernetes_namespace="{{ namespace }}"} > 0
       for: 1m
       description: '*\{{ $labels.app }}* har feil i selftest.'
-      action: "Sjekk {{ $labels.app }} i {{ $labels.kubernetes_namespace }} sin selftest for å se hva som er galt."
+      action: "Sjekk \{{ $labels.app }} i \{{ $labels.kubernetes_namespace }} sin selftest for å se hva som er galt."
       severity: warning
