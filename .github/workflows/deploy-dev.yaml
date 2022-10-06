@@ -1,24 +1,24 @@
-name: Deploy to dev
+name: Deploy alerts to dev
 on:
   push:
     branches-ignore:
       - 'master'
     paths:
       - .github/workflows/deploy-dev.yaml
-      - .nais/meldepliktalerts-dev.yaml
+      - .nais/meldeplikt-alerts-dev.yaml
       - .nais/vars.yaml
-      - .nais/alerts.yaml
+      - .nais/alerts-common.yaml
       - .nais/alerts-fss.yaml
       - .nais/alerts-gcp.yaml
 env:
-  RESOURCE_FILE: .nais/meldepliktalerts-dev.yaml
-  RESOURCE_FILE_FSS: .nais/meldepliktalerts-dev-fss.yaml
-  RESOURCE_FILE_GCP: .nais/meldepliktalerts-dev-gcp.yaml
+  RESOURCE_FILE: .nais/meldeplikt-alerts-dev.yaml
+  RESOURCE_FILE_FSS: .nais/meldeplikt-alerts-dev-fss.yaml
+  RESOURCE_FILE_GCP: .nais/meldeplikt-alerts-dev-gcp.yaml
   VARS_FILE: .nais/vars.yaml
 
 jobs:
   deploy_dev:
-    name: Deploy alerts to dev-fss
+    name: Deploy alerts to dev
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -26,7 +26,7 @@ jobs:
 
       - name: Append alerts
         run: |
-          cat .nais/alerts.yaml >> ${{ env.RESOURCE_FILE }}
+          cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE }}
           cat ${{ env.RESOURCE_FILE }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_FSS }}
           cat ${{ env.RESOURCE_FILE }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_GCP }}
 

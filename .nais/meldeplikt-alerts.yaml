@@ -1,0 +1,13 @@
+apiVersion: nais.io/v1
+kind: Alert
+metadata:
+  name: {{ name }}
+  namespace: {{ namespace }}
+  labels:
+    team: {{ team }}
+spec:
+  receivers:
+    slack:
+      channel: '#{{ channel }}'
+      prependText: "<!here> | "
+  alerts:
