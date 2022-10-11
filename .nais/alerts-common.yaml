@@ -28,7 +28,7 @@
       severity: danger
     # Sjekk HTTP 4xx-klientfeil
     - alert: Høy andel HTTP klientfeil (4xx-responser)
-      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 10
+      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 20
       for: 3m
       description: '*\{{ $labels.service }}* har logget mange feil.'
       action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 4xx-feilresponser.'
