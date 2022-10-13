@@ -33,8 +33,8 @@ jobs:
         run: |
           cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE_DEV }}
           cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE }}
-          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-dev-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
-          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-dev-gcp.yaml > ${{ env.RESOURCE_FILE_DEV_GCP }}
+          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
+          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_DEV_GCP }}
           cat ${{ env.RESOURCE_FILE }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_FSS }}
           cat ${{ env.RESOURCE_FILE }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_GCP }}
 
