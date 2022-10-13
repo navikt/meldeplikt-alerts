@@ -37,6 +37,6 @@
     - alert: Høy threadcount for en eller flere podder
       expr: sum(jvm_threads_live_threads{kubernetes_namespace="{{ namespace }}"}) by (kubernetes_pod_name, app) > 5
       for: 3m
-      description: '*\{{ $labels.app }}*, pod \{{ $labels.kubernetes_pod_name }}* har startet unaturlig mange tråder.'
+      description: '*\{{ $labels.app }}*, pod *\{{ $labels.kubernetes_pod_name }}* har startet unaturlig mange tråder.'
       action: 'Sjekk JVM metrics i NAIS App Dashboard for \{{ $labels.app }}. Lukkes f.eks HTTP-klienten riktig?'
       severity: danger
