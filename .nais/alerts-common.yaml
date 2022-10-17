@@ -26,9 +26,9 @@
       description: '*\{{ $labels.service }}* har logget mange feil.'
       action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 5xx-feilresponser.'
       severity: danger
-    # Sjekk HTTP 4xx-klientfeil
+    # Sjekk HTTP 4xx-klientfeil. Filtrerer vekk stille perioder for å unngå falske alarmer
     - alert: Høy andel HTTP klientfeil (4xx-responser)
-      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 20 and (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m]))) > 1
+      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 20 and (sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m]))) > 3
       for: 3m
       description: '*\{{ $labels.service }}* har logget mange feil.'
       action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 4xx-feilresponser.'
