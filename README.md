@@ -7,10 +7,10 @@ For mer informasjon om hvordan alarmene fungerer se: `https://doc.nais.io/observ
 
 ## Komme i gang
 Bruk Prometheus for å teste queries.
-- `https://prometheus.nais.adeo.no/` (prod-fss)
-- `https://prometheus.nais.preprod.local/graph` (dev-fss)
-- `https://prometheus.prod-gcp.nais.io/` (prod-gcp)
-- `https://prometheus.dev-gcp.nais.io/graph` (dev-gcp)
+- `https://prometheus.nais.adeo.no` (prod-fss)
+- `https://prometheus.nais.preprod.local` (dev-fss)
+- `https://prometheus.prod-gcp.nais.io` (prod-gcp)
+- `https://prometheus.dev-gcp.nais.io` (dev-gcp)
 
 ## Utvikling
 Generelle alerts for alle miljø legges i `alerts-common.yaml` mens alerts for et gitt cluster eller applikasjon legges i `alerts-<cluster>>.yaml`.
