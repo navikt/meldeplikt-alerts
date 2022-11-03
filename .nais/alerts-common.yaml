@@ -40,3 +40,10 @@
       description: '*\{{ $labels.app }}* pod *\{{ $labels.kubernetes_pod_name }}* har startet unaturlig mange tråder.'
       action: 'Sjekk JVM metrics i NAIS App Dashboard for \{{ $labels.app }}. Lukkes f.eks HTTP-klienten riktig?'
       severity: danger
+    # Sjekk om endepunkter har unaturlig lang responstid
+    - alert: Lang responstid for endepunkt
+      expr: (sum by(app, uri)(increase(http_server_requests_seconds_sum{status="200",kubernetes_namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m])) / sum by(app, uri)(increase(http_server_requests_seconds_count{status="200",kubernetes_namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m]))) > 2
+      for: 3m
+      description: '*\{{ $labels.app }}* endepunkt *\{{ $labels.uri }}* har lang responstid.'
+      action: 'Sjekk aktuelt Grafana-dashboard for \{{ $labels.app }}.'
+      severity: warning
