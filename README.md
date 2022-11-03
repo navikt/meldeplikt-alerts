@@ -6,7 +6,11 @@ Lager alerts for Team meldeplikt sine applikasjoner.
 For mer informasjon om hvordan alarmene fungerer se: `https://doc.nais.io/observability/alerts`.
 
 ## Komme i gang
-Bruk `https://prometheus.nais.preprod.local/graph` og `https://prometheus.dev-gcp.nais.io/graph` for å teste queries.
+Bruk Prometheus for å teste queries.
+- `https://prometheus.nais.adeo.no/` (prod-fss)
+- `https://prometheus.nais.preprod.local/graph` (dev-fss)
+- `https://prometheus.prod-gcp.nais.io/` (prod-gcp)
+- `https://prometheus.dev-gcp.nais.io/graph` (dev-gcp)
 
 ## Utvikling
 Generelle alerts for alle miljø legges i `alerts-common.yaml` mens alerts for et gitt cluster eller applikasjon legges i `alerts-<cluster>>.yaml`.
