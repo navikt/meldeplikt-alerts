@@ -42,7 +42,7 @@
       severity: danger
     # Sjekk om endepunkter har unaturlig lang responstid
     - alert: Lang responstid for endepunkt
-      expr: (sum by(app, uri)(increase(http_server_requests_seconds_sum{status="200",kubernetes_namespace="meldekort",uri!~"/actuator.*|/internal.*"}[3m])) / sum by(app, uri)(increase(http_server_requests_seconds_count{status="200",kubernetes_namespace="meldekort",uri!~"/actuator.*|/internal.*"}[3m]))) > 0
+      expr: (sum by(app, uri)(increase(http_server_requests_seconds_sum{status="200",kubernetes_namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m])) / sum by(app, uri)(increase(http_server_requests_seconds_count{status="200",kubernetes_namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m]))) > 2
       for: 3m
       description: '*\{{ $labels.app }}* endepunkt *\{{ $labels.uri }}* har lang responstid.'
       action: 'Sjekk aktuelt Grafana-dashboard for \{{ $labels.app }}.'
