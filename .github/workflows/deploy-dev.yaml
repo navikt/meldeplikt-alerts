@@ -49,4 +49,3 @@ jobs:
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_GCP }}
           VARS: ${{ env.VARS_FILE }}
           PRINT_PAYLOAD: true
-#
