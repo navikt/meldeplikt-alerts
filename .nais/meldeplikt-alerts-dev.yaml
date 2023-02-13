@@ -3,6 +3,8 @@ kind: PrometheusRule
 metadata:
   name: {{ name }}
   namespace: {{ namespace }}
+  labels:
+    team: {{ team }}
 spec:
   groups:
     - name: {{ name }}
