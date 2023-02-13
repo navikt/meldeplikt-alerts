@@ -34,6 +34,10 @@ jobs:
       #          cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE_DEV }}
       #          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
 
+      - name: Temp debug
+        run: |
+          cat ${{ env.RESOURCE_FILE_DEV_GCP }}
+          cat ${{ env.VARS_FILE }}
 
 #      - name: Deploy to dev-fss
 #        uses: nais/deploy/actions/deploy@v1
