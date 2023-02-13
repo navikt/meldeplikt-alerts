@@ -28,18 +28,19 @@ jobs:
 
       - name: Append alerts
         run: |
-          cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE_DEV }}
-          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
+#          cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE_DEV }}
+          touch ${{ env.RESOURCE_FILE_DEV }}
+#          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
           cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_DEV_GCP }}
 
-      - name: Deploy to dev-fss
-        uses: nais/deploy/actions/deploy@v1
-        env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
-          CLUSTER: dev-fss
-          RESOURCE: ${{ env.RESOURCE_FILE_DEV_FSS }}
-          VARS: ${{ env.VARS_FILE }}
-          PRINT_PAYLOAD: true
+#      - name: Deploy to dev-fss
+#        uses: nais/deploy/actions/deploy@v1
+#        env:
+#          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+#          CLUSTER: dev-fss
+#          RESOURCE: ${{ env.RESOURCE_FILE_DEV_FSS }}
+#          VARS: ${{ env.VARS_FILE }}
+#          PRINT_PAYLOAD: true
 
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v1
