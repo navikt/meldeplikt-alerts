@@ -1,6 +1,6 @@
       # Sjekker om det er feil ved selftest
       - alert: Feil i selftest
-        expr: selftests_aggregate_result_status{namespace="{{ namespace }}"} > -1
+        expr: selftests_aggregate_result_status{namespace="{{ namespace }}"} > 0
         for: 1m
         annotations:
           consequence: '*\{{ $labels.app }}* har feil i selftest.'
