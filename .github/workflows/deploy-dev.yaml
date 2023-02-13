@@ -40,7 +40,6 @@ jobs:
           CLUSTER: dev-fss
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_FSS }}
           VARS: ${{ env.VARS_FILE }}
-          TEAM: meldekort
           PRINT_PAYLOAD: true
 
       - name: Deploy to dev-gcp
@@ -50,5 +49,4 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_GCP }}
           VARS: ${{ env.VARS_FILE }}
-          TEAM: meldekort
           PRINT_PAYLOAD: true
