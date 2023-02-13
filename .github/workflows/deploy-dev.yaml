@@ -51,4 +51,5 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_GCP }}
           VARS: ${{ env.VARS_FILE }}
+          TEAM: meldekort
           PRINT_PAYLOAD: true
