@@ -28,10 +28,12 @@ jobs:
 
       - name: Append alerts
         run: |
-#          cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE_DEV }}
           touch ${{ env.RESOURCE_FILE_DEV }}
-#          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
           cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-gcp.yaml > ${{ env.RESOURCE_FILE_DEV_GCP }}
+
+      #          cat .nais/alerts-common.yaml >> ${{ env.RESOURCE_FILE_DEV }}
+      #          cat ${{ env.RESOURCE_FILE_DEV }} .nais/alerts-fss.yaml > ${{ env.RESOURCE_FILE_DEV_FSS }}
+
 
 #      - name: Deploy to dev-fss
 #        uses: nais/deploy/actions/deploy@v1
