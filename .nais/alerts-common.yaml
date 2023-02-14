@@ -1,49 +1,70 @@
-    # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
-    - alert: Applikasjon er nede
-      expr: kube_deployment_status_replicas_available{namespace="{{ namespace }}"} == 0
-      for: 3m
-      description: '*\{{ $labels.deployment }}* er nede i namespace \{{ $labels.namespace }}.'
-      action: 'Kjør `kubectl describe pod -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for logger. Sjekk også Kibana for eventuelle feil som er logget, query `application: \{{ $labels.deployment }} AND (level:Error OR level:Warning)`.'
-      severity: danger
-    # Sjekker om containere restartes flere ganger
-    - alert: Applikasjon restarter kontinuerlig
-      expr: sum(increase(kube_pod_container_status_restarts_total{namespace="{{ namespace }}"}[5m])) by (container) > 3
-      for: 3m
-      description: '*\{{ $labels.container }}* har restartet flere ganger den siste halvtimen.'
-      action: 'Se `kubectl describe pod \{{ $labels.container }} -n {{ namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.container }} -n {{ namespace }}` for logger.'
-      severity: danger
-    # Sjekker om en applikasjon har logget mange feil nylig
-    - alert: Høy feilrate i logger
-      expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_namespace="{{ namespace }}",log_level=~"Warning|Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_namespace="{{ namespace }}"}[3m]))) > 10
-      for: 3m
-      description: '*\{{ $labels.log_app }}* har logget høy andel feil.'
-      action: "Sjekk loggene til app \{{ $labels.log_app }} i namespace \{{ $labels.log_namespace }} for å se hvorfor det er så mye feil."
-      severity: warning
-    # Sjekk HTTP 5xx-serverfeil
-    - alert: Høy andel HTTP serverfeil (5xx-responser)
-      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^5\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 1
-      for: 3m
-      description: '*\{{ $labels.service }}* har logget mange feil.'
-      action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 5xx-feilresponser.'
-      severity: danger
-    # Sjekk HTTP 4xx-klientfeil. Filtrerer vekk stille perioder for å unngå falske alarmer
-    - alert: Høy andel HTTP klientfeil (4xx-responser)
-      expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 20 and (sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m]))) > 3
-      for: 3m
-      description: '*\{{ $labels.service }}* har logget mange feil.'
-      action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 4xx-feilresponser.'
-      severity: warning
-    # Sjekk hvorfor en pod starter unaturlig mange tråder
-    - alert: Høy threadcount for en pod
-      expr: sum(jvm_threads_live_threads{kubernetes_namespace="{{ namespace }}"}) by (kubernetes_pod_name, app) > 100
-      for: 3m
-      description: '*\{{ $labels.app }}* pod *\{{ $labels.kubernetes_pod_name }}* har startet unaturlig mange tråder.'
-      action: 'Sjekk JVM metrics i NAIS App Dashboard for \{{ $labels.app }}. Lukkes f.eks HTTP-klienten riktig?'
-      severity: danger
-    # Sjekk om endepunkter har unaturlig lang responstid
-    - alert: Lang responstid for endepunkt
-      expr: (sum by(app, uri)(increase(http_server_requests_seconds_sum{status="200", app!="meldekort-api", kubernetes_namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m])) / sum by(app, uri)(increase(http_server_requests_seconds_count{status="200", app!="meldekort-api", kubernetes_namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m]))) > 2
-      for: 3m
-      description: '*\{{ $labels.app }}* endepunkt *\{{ $labels.uri }}* har lang responstid.'
-      action: 'Sjekk aktuelt Grafana-dashboard for \{{ $labels.app }}.'
-      severity: warning
+      # Sjekker om en eller flere applikasjoner er nede i namespace meldekort, dvs. at det ikke finnes noen kjørende podder
+      - alert: Applikasjon er nede
+        expr: kube_deployment_status_replicas_available{namespace="{{ namespace }}"} == 0
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.deployment }}* er nede i namespace \{{ $labels.namespace }}.'
+          action: 'Kjør `kubectl describe pod -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.deployment }} -n \{{ $labels.namespace }}` for logger. Sjekk også Kibana for eventuelle feil som er logget, query `application: \{{ $labels.deployment }} AND (level:Error OR level:Warning)`.'
+        labels:
+          namespace: {{ namespace }}
+          severity: danger
+      # Sjekker om containere restartes flere ganger
+      - alert: Applikasjon restarter kontinuerlig
+        expr: sum(increase(kube_pod_container_status_restarts_total{namespace="{{ namespace }}"}[5m])) by (container) > 3
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.container }}* har restartet flere ganger den siste halvtimen.'
+          action: 'Se `kubectl describe pod \{{ $labels.container }} -n {{ namespace }}` for å se events, og `kubectl logs -l app=\{{ $labels.container }} -n {{ namespace }}` for logger.'
+        labels:
+          namespace: {{ namespace }}
+          severity: danger
+      # Sjekker om en applikasjon har logget mange feil nylig
+      - alert: Høy feilrate i logger
+        expr: (100 * sum by (log_app, log_namespace) (rate(logd_messages_total{log_namespace="{{ namespace }}",log_level=~"Warning|Error"}[3m])) / sum by (log_app, log_namespace) (rate(logd_messages_total{log_namespace="{{ namespace }}"}[3m]))) > 10
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.log_app }}* har logget høy andel feil.'
+          action: "Sjekk loggene til app \{{ $labels.log_app }} i namespace \{{ $labels.log_namespace }} for å se hvorfor det er så mye feil."
+        labels:
+          namespace: {{ namespace }}
+          severity: warning
+      # Sjekk HTTP 5xx-serverfeil
+      - alert: Høy andel HTTP serverfeil (5xx-responser)
+        expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^5\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 1
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.service }}* har logget mange feil.'
+          action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 5xx-feilresponser.'
+        labels:
+          namespace: {{ namespace }}
+          severity: danger
+      # Sjekk HTTP 4xx-klientfeil. Filtrerer vekk stille perioder for å unngå falske alarmer
+      - alert: Høy andel HTTP klientfeil (4xx-responser)
+        expr: (100 * (sum by (service) (rate(nginx_ingress_controller_requests{status=~"^4\\d\\d", namespace="{{ namespace }}"}[3m])) / sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m])))) > 20 and (sum by (service) (rate(nginx_ingress_controller_requests{namespace="{{ namespace }}"}[3m]))) > 3
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.service }}* har logget mange feil.'
+          action: 'Sjekk loggene for å se hvorfor \{{ $labels.service }} returnerer HTTP 4xx-feilresponser.'
+        labels:
+          namespace: {{ namespace }}
+          severity: warning
+      # Sjekk hvorfor en pod starter unaturlig mange tråder
+      - alert: Høy threadcount for en pod
+        expr: sum(jvm_threads_live_threads{namespace="{{ namespace }}"}) by (pod, app) > 100
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.app }}* pod *\{{ $labels.pod }}* har startet unaturlig mange tråder.'
+          action: 'Sjekk JVM metrics i NAIS App Dashboard for \{{ $labels.app }}. Lukkes f.eks HTTP-klienten riktig?'
+        labels:
+          namespace: {{ namespace }}
+          severity: danger
+      # Sjekk om endepunkter har unaturlig lang responstid
+      - alert: Lang responstid for endepunkt
+        expr: (sum by(app, uri)(increase(http_server_requests_seconds_sum{status="200", app!="meldekort-api", namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m])) / sum by(app, uri)(increase(http_server_requests_seconds_count{status="200", app!="meldekort-api", namespace="{{ namespace }}",uri!~"/.*actuator.*|/.*internal.*"}[3m]))) > 2
+        for: 3m
+        annotations:
+          consequence: '*\{{ $labels.app }}* endepunkt *\{{ $labels.uri }}* har lang responstid.'
+          action: 'Sjekk aktuelt Grafana-dashboard for \{{ $labels.app }}.'
+        labels:
+          namespace: {{ namespace }}
+          severity: warning
