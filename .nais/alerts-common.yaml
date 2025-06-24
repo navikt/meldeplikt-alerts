@@ -50,7 +50,7 @@
           severity: warning
       # Sjekk hvorfor en pod starter unaturlig mange tråder
       - alert: Høy threadcount for en pod
-        expr: sum(jvm_threads_live_threads{namespace="{{ namespace }}"}) by (pod, app) > 125
+        expr: sum(jvm_threads_live_threads{namespace="{{ namespace }}"}) by (pod, app) > 200
         for: 3m
         annotations:
           consequence: '*\{{ $labels.app }}* pod *\{{ $labels.pod }}* har startet unaturlig mange tråder.'
