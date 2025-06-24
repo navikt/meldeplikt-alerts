@@ -53,7 +53,6 @@ jobs:
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_GCP }}
           VARS: ${{ env.VARS_FILE }}
@@ -62,7 +61,6 @@ jobs:
       - name: Deploy to prod-fss
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-fss
           RESOURCE: ${{ env.RESOURCE_FILE_FSS }}
           VARS: ${{ env.VARS_FILE }}
@@ -71,7 +69,6 @@ jobs:
       - name: Deploy to prod-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: ${{ env.RESOURCE_FILE_GCP }}
           VARS: ${{ env.VARS_FILE }}
