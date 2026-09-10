@@ -8,3 +8,20 @@
         labels:
           namespace: {{ namespace }}
           severity: warning
+      # Sjekk om brukere ikke sender inn meldekort
+      - alert: Brukere sender ikke inn meldekort
+        expr: |
+          (
+             (sum(increase(meldekort_api_innsendte_meldekort_ok_total{namespace="{{ namespace }}", app="{{ meldekortApi }}"}[1m])) or vector(0)) < 1
+          )
+          and on()
+          (
+            (hour() >= 7) and (hour() < 23)
+          )
+        for: 10m
+        annotations:
+          consequence: '*{{ meldekortApi }}* har ikke mottatt innsendte meldekort på 10 minutter.'
+          action: 'Sjekk aktuelt Grafana-dashboard.'
+        labels:
+          namespace: {{ namespace }}
+          severity: warning

@@ -1,3 +1,4 @@
 name: meldeplikt-alerts
 namespace: meldekort
 team: meldekort
+meldekortApi: meldekort-api
