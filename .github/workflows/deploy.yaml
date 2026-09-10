@@ -9,7 +9,8 @@ on:
       - .nais/alerts-fss.yaml
       - .nais/alerts-gcp.yaml
       - .nais/meldeplikt-alerts.yaml
-      - .nais/vars.yaml
+      - .nais/vars-dev.yaml
+      - .nais/vars-prod.yaml
   workflow_dispatch:
 
 env:
@@ -19,7 +20,8 @@ env:
   RESOURCE_FILE_DEV_GCP: .nais/meldeplikt-alerts-dev-gcp.yaml
   RESOURCE_FILE_FSS: .nais/meldeplikt-alerts-fss.yaml
   RESOURCE_FILE_GCP: .nais/meldeplikt-alerts-gcp.yaml
-  VARS_FILE: .nais/vars.yaml
+  VARS_FILE_DEV: .nais/vars-dev.yaml
+  VARS_FILE: .nais/vars-prod.yaml
 
 jobs:
   deploy_dev:
@@ -46,7 +48,7 @@ jobs:
         env:
           CLUSTER: dev-fss
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_FSS }}
-          VARS: ${{ env.VARS_FILE }}
+          VARS: ${{ env.VARS_FILE_DEV }}
           PRINT_PAYLOAD: true
 
       - name: Deploy to dev-gcp
@@ -54,7 +56,7 @@ jobs:
         env:
           CLUSTER: dev-gcp
           RESOURCE: ${{ env.RESOURCE_FILE_DEV_GCP }}
-          VARS: ${{ env.VARS_FILE }}
+          VARS: ${{ env.VARS_FILE_DEV }}
           PRINT_PAYLOAD: true
 
       - name: Deploy to prod-fss
