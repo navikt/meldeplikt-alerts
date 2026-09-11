@@ -16,7 +16,7 @@
           )
           and on()
           (
-            (hour() >= 7) and (hour() < 23)
+            (hour() >= 5) and (hour() < 21)
           )
         for: 10m
         annotations:
