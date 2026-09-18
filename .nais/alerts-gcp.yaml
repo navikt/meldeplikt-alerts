@@ -18,9 +18,9 @@
           (
             (hour() >= 5) and (hour() < 21)
           )
-        for: 10m
+        for: 20m
         annotations:
-          consequence: '*{{ meldekortApi }}* har ikke mottatt innsendte meldekort på 10 minutter.'
+          consequence: '*{{ meldekortApi }}* har ikke mottatt innsendte meldekort på 20 minutter.'
           action: 'Sjekk aktuelt Grafana-dashboard.'
         labels:
           namespace: {{ namespace }}
